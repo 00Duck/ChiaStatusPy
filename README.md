@@ -2,7 +2,7 @@
 
 Sends status information from the Chia blockchain to the specified host/endpoint. The information collected is an arbitrary selection of endpoints available in the blockchain as of 1.1.5. This script is designed to be installed on a server with the chia blockchain and run via crontab or some other scheduled service.
 
-The output of this program is a single JSON file organizing the various data that can be collected. Here's an example of the structure:
+The output of this program is a single JSON object (sent to your specified endpoint) organizing the various data that can be collected. Here's an example of the structure:
 
 ```
 {
