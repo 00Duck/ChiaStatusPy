@@ -32,7 +32,11 @@ Navigate to an installation location:
 
 Install by cloning this repository
 
-`git clone https://github.com/00Duck/ChiaStatusPy`
+`sudo git clone https://github.com/00Duck/ChiaStatusPy`
+
+Take ownership (assuming you are not root) of the files downloaded:
+
+`sudo chown -R $(whoami) ChiaStatusPy/`
 
 Navigate to the config.ini file. Ensure your cert file and key file path is correct. Enter in host, endpoint, and user/password credentials for basic auth communication:
 
@@ -67,4 +71,11 @@ Add a crontab to schedule the script to run:
 
 If you would like to run this script every 10 minutes, it may look like this:
 
-`*/10 * * * * /usr/bin/python3 /opt/ChiaStatusPy/main.py`
+`*/10 * * * * cd /opt/ChiaStatusPy/ && /usr/bin/python3 /opt/ChiaStatusPy/main.py 2>&1 | /usr/bin/logger -t ChiaStatus`
+
+
+# Troubleshooting
+
+If firing the script directly works but you are having difficulty with the cronjob, try tailing the syslogs to get more information. Logging for the cronjob above can be found using this command:
+
+`sudo tail -f /var/log/syslog | grep ChiaStatus`
