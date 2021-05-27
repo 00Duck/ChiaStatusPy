@@ -15,7 +15,11 @@ OutboundClient
 class OutboundClient:
     def __init__(self) -> None:
         config = ConfigParser()
-        config.read('config.ini')
+        cl = config.read('config.ini')
+
+        if cl.__len__() == 0:
+            print("Could not open config.ini. Please ensure it exists in the same directory as the main program.")
+            exit()
 
         self.host = config.get("outboundclient", "host")
         if self.host == "":

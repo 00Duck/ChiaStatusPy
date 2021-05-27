@@ -1,9 +1,8 @@
-import json
 import OutboundClient
 import FullNodeClient
 import HarvesterClient
 import WalletClient
-import FarmerClient
+#import FarmerClient
 
 def main():
     oc = OutboundClient.OutboundClient()
