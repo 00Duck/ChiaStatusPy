@@ -34,8 +34,8 @@ def main():
     status["harvester"]["get_plots"] = hc.get_plots()
     status["harvester"]["get_plot_directories"] = hc.get_plot_directories()
 
-    #resp = oc.send("POST", status)
-    print(json.dumps(status))
+    resp = oc.send("POST", status)
+    #print(json.dumps(status))
 
 if __name__ == "__main__":
     main()
