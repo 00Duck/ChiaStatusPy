@@ -1,10 +1,16 @@
-import ChiaStatusClient as cclient
+import json
 import OutboundClient as outclient
-import Endpoints as ep
+import FullNodeClient
+import HarvesterClient
+import WalletClient
+import FarmerClient
 
 def main():
-    csc = cclient.ChiaStatusClient()
     oc = outclient.OutboundClient()
+    fnc = FullNodeClient.FullNodeClient()
+    hc = HarvesterClient.HarvesterClient()
+    wc = WalletClient.WalletClient()
+    #fc = FarmerClient.FarmerClient()
 
     status = {
         "farmer": {},
@@ -13,23 +19,23 @@ def main():
         "wallet": {}
     }
 
-    status["full_node"]["get_blockchain_state"] = csc.req(ep.FULL_NODE["get_blockchain_state"])
-    status["full_node"]["get_network_info"] = csc.req(ep.FULL_NODE["get_network_info"])
-    status["full_node"]["get_connections"] = csc.req(ep.FULL_NODE["get_connections"])
-    
-    status["wallet"]["get_sync_status"] = csc.req(ep.WALLET["get_sync_status"], {"wallet_id": 1})
-    status["wallet"]["get_height_info"] = csc.req(ep.WALLET["get_height_info"], {"wallet_id": 1})
-    status["wallet"]["get_wallet_balance"] = csc.req(ep.WALLET["get_wallet_balance"], {"wallet_id": 1})
-    status["wallet"]["get_transactions"] = csc.req(ep.WALLET["get_transactions"], {"wallet_id": 1})
-    status["wallet"]["get_next_address"] = csc.req(ep.WALLET["get_next_address"], {"wallet_id": 1, "new_address": False})
-    status["wallet"]["get_transaction_count"] = csc.req(ep.WALLET["get_transaction_count"], {"wallet_id": 1})
-    status["wallet"]["get_farmed_amount"] = csc.req(ep.WALLET["get_farmed_amount"], {"wallet_id": 1})
+    status["full_node"]["get_blockchain_state"] = fnc.get_blockchain_state()
+    status["full_node"]["get_network_info"] = fnc.get_network_info()
+    status["full_node"]["get_connections"] = fnc.get_connections()
 
-    status["harvester"]["get_plots"] = csc.req(ep.HARVESTER["get_plots"])
-    status["harvester"]["get_plot_directories"] = csc.req(ep.HARVESTER["get_plot_directories"])
+    status["wallet"]["get_sync_status"] = wc.get_sync_status({"wallet_id": 1})
+    status["wallet"]["get_height_info"] = wc.get_height_info({"wallet_id": 1})
+    status["wallet"]["get_wallet_balance"] = wc.get_wallet_balance({"wallet_id": 1})
+    status["wallet"]["get_transactions"] = wc.get_transactions({"wallet_id": 1})
+    status["wallet"]["get_next_address"] = wc.get_next_address({"wallet_id": 1, "new_address": False})
+    status["wallet"]["get_transaction_count"] = wc.get_transaction_count({"wallet_id": 1})
+    status["wallet"]["get_farmed_amount"] = wc.get_farmed_amount({"wallet_id": 1})
 
-    resp = oc.send("POST", status)
-    print(resp)
+    status["harvester"]["get_plots"] = hc.get_plots()
+    status["harvester"]["get_plot_directories"] = hc.get_plot_directories()
+
+    #resp = oc.send("POST", status)
+    print(json.dumps(status))
 
 if __name__ == "__main__":
     main()

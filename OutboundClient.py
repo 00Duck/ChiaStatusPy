@@ -40,12 +40,15 @@ class OutboundClient:
         }        
 
     def send(self, method: str, body: dict = {}) -> dict:
-        conn = http.client.HTTPSConnection(host=self.host, port=443)
-        conn.request(method, url=self.endpoint, headers=self.headers, body=json.dumps(body))
+        try:
+            conn = http.client.HTTPSConnection(host=self.host, port=443)
+            conn.request(method, url=self.endpoint, headers=self.headers, body=json.dumps(body))
 
-        resp = conn.getresponse()
+            resp = conn.getresponse()
 
-        if resp.status != 200 and resp.status != 201:
-            return {"error": str(resp.status) + " " + resp.reason}
+            if resp.status != 200 and resp.status != 201:
+                return {"error": str(resp.status) + " " + resp.reason}
 
-        return {"success": resp.status}
+            return {"success": resp.status}
+        except:
+            return {"error": "Failed to make outbound request"}
