@@ -6,9 +6,6 @@ __pycache__/
 # C extensions
 *.so
 
-# Don't overwrite the config file
-config.ini
-
 # Distribution / packaging
 .Python
 build/
