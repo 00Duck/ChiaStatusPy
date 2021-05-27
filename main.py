@@ -1,12 +1,12 @@
 import json
-import OutboundClient as outclient
+import OutboundClient
 import FullNodeClient
 import HarvesterClient
 import WalletClient
 import FarmerClient
 
 def main():
-    oc = outclient.OutboundClient()
+    oc = OutboundClient.OutboundClient()
     fnc = FullNodeClient.FullNodeClient()
     hc = HarvesterClient.HarvesterClient()
     wc = WalletClient.WalletClient()
@@ -35,7 +35,8 @@ def main():
     status["harvester"]["get_plot_directories"] = hc.get_plot_directories()
 
     resp = oc.send("POST", status)
-    #print(json.dumps(status))
+
+    print(resp)
 
 if __name__ == "__main__":
     main()
